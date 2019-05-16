@@ -2,14 +2,10 @@
 <template>
   <div>
     <h2 v-if="!register">Login</h2>
-    <h2 v-if="register">Create New Account</h2>
     <input type="text" v-model="username" placeholder="Username"/>
-    <input v-if="register" type="text" v-model="username" placeholder="Username"/>
     <input type="password" v-model="password" placeholder="Password" />
-    <input v-if="register" type="password" v-model="password" placeholder="Password" />
     <button @click="handleLogin">Login to your account</button>
-    <button >Register new account</button>
-    <button @click="handleRegister">Or Create a New Account</button>
+    <router-link to="/register" >Create a New Account</router-link>
     <!-- <div>{{workouts}}</div> -->
   </div>
 </template>
