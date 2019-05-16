@@ -16,7 +16,7 @@ app.use(bodyParser.json())
 
   })
 
-  app.post(`/api`, ctrl.addUser)
-  app.get('/api', ctrl.getNames)
+  app.post(`/login`, ctrl.login)
+  app.get('/getRecentWorkouts', ctrl.getRecentWorkouts)
 
   app.listen(SERVER_PORT, () => console.log(`working on port ${SERVER_PORT}`))
