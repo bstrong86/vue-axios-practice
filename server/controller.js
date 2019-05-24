@@ -1,29 +1,8 @@
-
-// module.exports ={
-
-//   addUser: async (req, res) => {
-//     console.log(req.body)
-//     const {username} = req.body
-//     const db = req.app.get('db')
-//     let user = await db.add_user({username})
-//     res.status(200).send(user)
-//   },
-//   getNames: async (req, res) => {
-//     console.log('getnames')
-//     const db = req.app.get('db')
-//     let username= await db.get_names()
-//     console.log(username)
-//     res.status(200).send(username)
-//   }
-
-// }
-
-
 const bcrypt = require('bcryptjs')
-const axios = require('axios')
 
 module.exports = {
     login: async (req, res) => {
+      console.log(req.body)
         const {username, password} = req.body
         const {session} = req
         const db = req.app.get('db')
@@ -36,12 +15,14 @@ module.exports = {
         if (authenticated) {
             delete user.password
             session.user = user
+            console.log(session.user)
             res.status(200).send(session.user)
         }else { res.sendStatus(401) 
         }
     },
-    register: async (req, res) => {        
-        const {username, password, profile_pic} = req.body
+    register: async (req, res) => {      
+        console.log("register backend")  
+        const {username, password} = req.body
         const {session} = req
         const db = req.app.get('db')
         let takenUsername = await db.check_username({username})
@@ -51,14 +32,14 @@ module.exports = {
         }
         const salt = bcrypt.genSaltSync(10)
         const hash = bcrypt.hashSync(password, salt)
-        let user = await db.register({username, password: hash, profile_pic})
+        let user = await db.register({username, password: hash})
         user = user[0]
         session.user = user
         res.status(200).send(session.user)
     },
     createWorkout: async (req, res) => {
         try{
-            const {workout_name} = req.body
+            const {workout_name, muscle} = req.body
             const {id} = req.params
             let users_id = id
             const db = req.app.get('db')
@@ -67,7 +48,7 @@ module.exports = {
             if (takenWorkoutName !== 0) {
                 return res.sendStatus(401)
             }
-            let workout = await db.create_workout({workout_name, users_id})
+            let workout = await db.create_workout({workout_name, users_id, muscle})
             workout = workout[0]
             res.status(200).send(workout)
         } catch (err) {

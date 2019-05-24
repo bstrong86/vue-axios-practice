@@ -1,19 +1,23 @@
 <template>
   <div>
+    <NavBar/>
     <h2>Register</h2>
     <input placeholder="Username" v-model="username"/>
     <input type="password" placeholder="Password" v-model="password"/>
     <input type="password" placeholder="Password" v-model="checkPassword"/>
-    <!-- <h2 v-if="!passwordMatch">password doesn't match</h2> -->
-    <button :disabled="!passwordMatch">Register Account</button>
-    <p>{{this.username}}</p>
+    <button :disabled="!passwordMatch" @click="handleRegister">Register Account</button>
   </div>
 </template>
 
 <script>
-// import axios from 'axios'
+import axios from 'axios'
+import NavBar from './NavBar'
+
 export default {
   name: 'Register',
+  components: {
+    NavBar
+  },
   data: function() {
     return {
       username: '',
@@ -29,14 +33,26 @@ export default {
         username: this.username,
         password: this.password
       }
-    }      
+      try {
+        console.log(user)
+        let res = await axios.post('/register', user)
+        console.log(res.data, 99)
+      } catch (err) {
+          alert('username taken')
+      }
+    },
+    handlePasswordCheck(){
+          if(this.password === this.checkPassword){
+            if(this.password.length>0){
+              if(this.checkPassword.length){
+              this.passwordMatch = true
+            }}
+          } else{this.passwordMatch = false}
+        }      
   },
   watch: {
-        checkPassword: function(val) {
-          console.log(this.checkPassword)
-          this.password === this.checkPassword && this.checkPassword.length > 0 ? this.passwordMatch = true : this.passwordMatch = false
-          console.log(this.passwordMatch)
-        }
+        checkPassword: function() {this.handlePasswordCheck()},
+        password: function() {this.handlePasswordCheck()}
       }
 
 
