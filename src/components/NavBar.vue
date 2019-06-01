@@ -1,9 +1,9 @@
 <template>
   <div class="navbar">
     <div>{{username}}</div>
-    <button @click="handleLogout">Logout</button>
     <div>workouts finished</div>
     <div>weight lifted</div>
+    <button @click="handleLogout">Logout</button>
   </div>
 </template>
 
@@ -22,7 +22,7 @@ export default {
   methods: {
     async handleLogout(){
       await axios.post('logout')
-      store.commit('clearUsername')
+      store.commit('clearUser')
       this.$router.push('/')
     }
   }

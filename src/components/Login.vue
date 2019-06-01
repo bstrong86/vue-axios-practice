@@ -43,17 +43,17 @@ export default {
         username: this.username,
         password: this.password}
       let res = await axios.post('/login', user )
-      this.handleName(res.data.username)
+      this.handleUser(res.data.username, res.data.user_id)
       this.$router.push('profile')
-
     },
     async handleGetNames(){
       return axios.get('/api').then(response =>{
         this.users = response.data
       })
     },
-     handleName(username){
+     handleUser(username, id){
        store.commit('updateUsername', username)
+       store.commit('updateUserId', id)
      }
   
   }

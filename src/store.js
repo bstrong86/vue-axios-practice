@@ -9,7 +9,8 @@ export default new Vuex.Store({
     username: '',
     profile_pic: '',
     weight_lifted: '',
-    workouts_finished:''
+    workouts_finished:'',
+    userId:0
 
   },
   plugins: [
@@ -20,8 +21,12 @@ export default new Vuex.Store({
     updateUsername (state, name) {
       state.username = name   
     },
-    clearUsername (state) {
-      state.username = ''
+    clearUser (state) {
+      state.username = '',
+      state.userId = 0
+    },
+    updateUserId (state, id) {
+      state.userId = id
     }
 
   }

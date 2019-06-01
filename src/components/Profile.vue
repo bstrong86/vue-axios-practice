@@ -2,6 +2,8 @@
   <div>
     <NavBar />
     <div>Profile Page</div>
+    <button v-if="!create" @click="create = !create">Create Workout</button>
+    <button v-if="create" @click="create = !create">Close</button>
     <div v-if="create">
       <CreateWorkout/>
     </div>
@@ -22,10 +24,9 @@ export default {
   },
   data: function(){
     return {
-      create: false
+      create: true,
     }
-  }
-  
+  },  
 }
 </script>
 
